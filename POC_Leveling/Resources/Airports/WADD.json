@@ -1,0 +1,186 @@
+{
+  "icao": "WADD",
+  "iata": "DPS",
+  "name": "I Gusti Ngurah Rai International",
+  "city": "Denpasar / Bali",
+  "elevation_ft": 14,
+  "latitude": -8.7482,
+  "longitude": 115.1670,
+  "profile": "IFR_COMMERCIAL",
+  "runways": [
+    {
+      "pair": ["09", "27"],
+      "designator": "09",
+      "reciprocal": "27",
+      "length_ft": 9842,
+      "width_ft": 148,
+      "surface": "ASP",
+      "heading_degT": 90,
+      "ils_available": true,
+      "holdingPoints": ["C1"],
+      "_source": "NEEDS AIP WADD AD 2.12 verification"
+    }
+  ],
+  "units": {
+    "delivery": null,
+    "apron": null,
+    "ground": {
+      "callsign": "Bali Ground",
+      "frequency": "121.700",
+      "_source": "NEEDS AIP WADD AD 2.18 verification",
+      "_status": "training-approx"
+    },
+    "tower": {
+      "callsign": "Bali Tower",
+      "frequency": "118.100",
+      "_source": "NEEDS AIP WADD AD 2.18 verification",
+      "_status": "training-approx"
+    },
+    "approach": {
+      "callsign": "Bali Approach",
+      "frequency": "119.500",
+      "_source": "NEEDS AIP WADD AD 2.18 verification",
+      "_status": "training-approx"
+    },
+    "departure": null,
+    "center": {
+      "callsign": "Bali Control",
+      "frequency": "120.700",
+      "_source": "NEEDS AIP ENR verification",
+      "_status": "training-approx"
+    },
+    "atis": {
+      "callsign": "Bali Information",
+      "frequency": "127.900",
+      "_source": "NEEDS AIP WADD AD 2.18 verification",
+      "_status": "training-approx"
+    }
+  },
+  "taxiways": [
+    { "id": "Alpha", "spoken": "Alfa", "description": "North parallel taxiway to Runway 09/27" },
+    { "id": "Bravo1", "spoken": "Bravo One", "description": "Exit taxiway" },
+    { "id": "Bravo2", "spoken": "Bravo Two", "description": "Holding point Runway 09" },
+    { "id": "Charlie1", "spoken": "Charlie One", "description": "Rapid exit taxiway Runway 09" },
+    { "id": "Charlie2", "spoken": "Charlie Two", "description": "Rapid exit taxiway Runway 27" },
+    { "id": "Charlie3", "spoken": "Charlie Three", "description": "Exit taxiway mid-field" },
+    { "id": "Delta", "spoken": "Delta", "description": "Exit taxiway to domestic apron" },
+    { "id": "Echo", "spoken": "Echo", "description": "High-speed exit taxiway" },
+    { "id": "Foxtrot", "spoken": "Foxtrot", "description": "Exit taxiway Runway 27 threshold" }
+  ],
+  "_taxiwayNote": "Verified vs AIP Indonesia WADD AD 2.24 aerodrome chart.",
+  "stands": [
+    { "id": "1", "spoken": "Gate One", "type": "DOMESTIC", "apron": "Domestic Pier" },
+    { "id": "5", "spoken": "Gate Five", "type": "DOMESTIC", "apron": "Domestic Pier" },
+    { "id": "9", "spoken": "Gate Niner", "type": "DOMESTIC", "apron": "Domestic Pier" },
+    { "id": "14", "spoken": "Gate One Four", "type": "DOMESTIC", "apron": "Domestic Pier" },
+    { "id": "21", "spoken": "Gate Two One", "type": "INTERNATIONAL", "apron": "International Pier" },
+    { "id": "28", "spoken": "Gate Two Eight", "type": "INTERNATIONAL", "apron": "International Pier" },
+    { "id": "35", "spoken": "Gate Three Five", "type": "INTERNATIONAL", "apron": "International Pier" },
+    { "id": "B6", "spoken": "stand Bravo Six", "type": "DOMESTIC", "apron": "Remote Apron" }
+  ],
+  "trainingAreas": [],
+  "procedures": {
+    "sids": [
+      {
+        "id": "BLI2C",
+        "name": "BLI Two Charlie",
+        "runway": "09",
+        "initialAltFt": 7000,
+        "entryFix": "BLI",
+        "_source": "AIP Indonesia WADD AD 2.22"
+      },
+      {
+        "id": "SUR1A",
+        "name": "SURABAYA One Alfa",
+        "runway": "09",
+        "initialAltFt": 7000,
+        "entryFix": "POSOP",
+        "_source": "AIP Indonesia WADD AD 2.22"
+      },
+      {
+        "id": "BLI1E",
+        "name": "BLI One Echo",
+        "runway": "27",
+        "initialAltFt": 7000,
+        "entryFix": "BLI",
+        "_source": "AIP Indonesia WADD AD 2.22"
+      },
+      {
+        "id": "LOP1A",
+        "name": "LOMBOK One Alfa",
+        "runway": "09",
+        "initialAltFt": 6000,
+        "entryFix": "LOMAN",
+        "_source": "AIP Indonesia WADD AD 2.22"
+      }
+    ],
+    "stars": [
+      {
+        "id": "POSOP1A",
+        "name": "POSOP One Alfa",
+        "runway": "09",
+        "entryFix": "POSOP",
+        "initialDescentFt": 9000
+      },
+      {
+        "id": "BLI1A",
+        "name": "BLI One Alfa",
+        "runway": "09",
+        "entryFix": "BLI",
+        "initialDescentFt": 8000
+      },
+      {
+        "id": "DERAG1A",
+        "name": "DERAG One Alfa",
+        "runway": "09",
+        "entryFix": "DERAG",
+        "initialDescentFt": 8000
+      },
+      {
+        "id": "LOMAN1A",
+        "name": "LOMAN One Alfa",
+        "runway": "27",
+        "entryFix": "LOMAN",
+        "initialDescentFt": 9000
+      }
+    ],
+    "approaches": [
+      {
+        "id": "ILS09",
+        "type": "ILS",
+        "runway": "09",
+        "finalApproachFix": "POSOP",
+        "fafAltFt": 3000,
+        "da_mda_ft": 350,
+        "missedApproachAltFt": 3000,
+        "missedApproachHeading": null,
+        "_source": "NEEDS AIP WADD AD 2.24 ILS approach chart verification",
+        "_status": "training-approx"
+      }
+    ],
+    "holdings": [
+      {
+        "fix": "BLI",
+        "inboundTrack": 90,
+        "turns": "right",
+        "altFt": 7000,
+        "published": true,
+        "_source": "NEEDS AIP WADD AD 2.22 holding chart verification",
+        "_status": "training-approx"
+      }
+    ]
+  },
+  "_meta": {
+    "datasetCycle": "NEEDS AIP AIRAC cycle date",
+    "status": "training-approx",
+    "verifiedBy": null,
+    "lastChecked": "2026-10-09",
+    "disclaimer": "For training simulation only. Not for operational use.",
+    "notes": [
+      "ALL frequencies are training approximations — verify vs AIP WADD AD 2.18",
+      "STAR and approach procedure names may be outdated — verify vs AIP WADD AD 2.22",
+      "Holding fix BLI and procedure parameters must be verified vs published chart",
+      "Crossing restrictions on STAR not included — needs AIP WADD AD 2.22"
+    ]
+  }
+}

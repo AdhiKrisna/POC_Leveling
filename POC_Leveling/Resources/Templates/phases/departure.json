@@ -1,0 +1,188 @@
+[
+  {
+    "id": "DP-01",
+    "name": "Tower Call — Ready for Departure",
+    "phase": "DEPARTURE",
+    "profile": ["VFR_LOCAL", "IFR_COMMERCIAL"],
+    "initiator": "ATC",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, contact {UNIT_TOWER} {TOWER_FREQ}.",
+        "slots": ["CALLSIGN","UNIT_TOWER","TOWER_FREQ"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{TOWER_FREQ}, {CALLSIGN}.",
+        "slots": ["TOWER_FREQ","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "TOWER_FREQ", "type": "mandatoryNumber" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      },
+      {
+        "turn": 3,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_TOWER}, {CALLSIGN}, holding point {HOLDING_POINT} runway {RUNWAY}, ready for departure.",
+        "slots": ["UNIT_TOWER","CALLSIGN","HOLDING_POINT","RUNWAY"],
+        "criticalReadback": []
+      }
+    ],
+    "_source": "Doc 9432 Ch.4 §4.5 / Doc 4444 §4.11.3"
+  },
+  {
+    "id": "DP-03",
+    "name": "Line Up and Wait",
+    "phase": "DEPARTURE",
+    "profile": ["VFR_LOCAL", "IFR_COMMERCIAL"],
+    "initiator": "ATC",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, runway {RUNWAY}, line up and wait.",
+        "slots": ["CALLSIGN","RUNWAY"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Runway {RUNWAY}, line up and wait, {CALLSIGN}.",
+        "slots": ["RUNWAY","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "RUNWAY", "type": "mandatoryNumber" },
+          { "slot": "LINE_UP_WAIT", "keyword": "line up and wait", "type": "mandatoryKeyword" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "Doc 4444 Ch.12 p.12-25 / Doc 9432 Ch.4 §4.5"
+  },
+  {
+    "id": "DP-04",
+    "name": "Take-off Clearance (Basic)",
+    "phase": "DEPARTURE",
+    "profile": ["VFR_LOCAL", "IFR_COMMERCIAL"],
+    "initiator": "ATC",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, runway {RUNWAY}, wind {WIND_DIRECTION} degrees {WIND_SPEED} knots, cleared for take-off.",
+        "slots": ["CALLSIGN","RUNWAY","WIND_DIRECTION","WIND_SPEED"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Runway {RUNWAY}, cleared for take-off, {CALLSIGN}.",
+        "slots": ["RUNWAY","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "RUNWAY", "type": "mandatoryNumber" },
+          { "slot": "TAKEOFF_CLEARANCE", "keyword": "cleared for take-off", "type": "mandatoryKeyword" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "Doc 9432 Ch.4 §4.5 / Doc 4444 Ch.12 p.12-25"
+  },
+  {
+    "id": "DP-05",
+    "name": "Take-off Clearance with Departure Instruction",
+    "phase": "DEPARTURE",
+    "profile": ["VFR_LOCAL", "IFR_COMMERCIAL"],
+    "initiator": "ATC",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, after departure turn {TURN_DIRECTION} heading {HEADING}, climb {INITIAL_ALT}, runway {RUNWAY}, wind {WIND_DIRECTION} degrees {WIND_SPEED} knots, cleared for take-off.",
+        "slots": ["CALLSIGN","TURN_DIRECTION","HEADING","INITIAL_ALT","RUNWAY","WIND_DIRECTION","WIND_SPEED"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "After departure turn {TURN_DIRECTION} heading {HEADING}, climb {INITIAL_ALT}, runway {RUNWAY}, cleared for take-off, {CALLSIGN}.",
+        "slots": ["TURN_DIRECTION","HEADING","INITIAL_ALT","RUNWAY","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "TURN_DIRECTION", "type": "mandatoryValue" },
+          { "slot": "HEADING", "type": "mandatoryNumber" },
+          { "slot": "INITIAL_ALT", "type": "mandatoryNumber" },
+          { "slot": "RUNWAY", "type": "mandatoryNumber" },
+          { "slot": "TAKEOFF_CLEARANCE", "keyword": "cleared for take-off", "type": "mandatoryKeyword" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "Doc 9432 Ch.4 §4.5"
+  },
+  {
+    "id": "DP-06",
+    "name": "Airborne and Departure Handoff",
+    "phase": "DEPARTURE",
+    "profile": ["VFR_LOCAL", "IFR_COMMERCIAL"],
+    "initiator": "ATC",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, contact {UNIT_DEPARTURE} {DEP_FREQ}.",
+        "slots": ["CALLSIGN","UNIT_DEPARTURE","DEP_FREQ"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{DEP_FREQ}, {CALLSIGN}.",
+        "slots": ["DEP_FREQ","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "DEP_FREQ", "type": "mandatoryNumber" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      },
+      {
+        "turn": 3,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_DEPARTURE}, {CALLSIGN}, passing {INITIAL_ALT} climbing {CURRENT_LEVEL}, heading {HEADING}.",
+        "slots": ["UNIT_DEPARTURE","CALLSIGN","INITIAL_ALT","CURRENT_LEVEL","HEADING"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 4,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, {UNIT_DEPARTURE}, radar identified, climb and maintain {CURRENT_LEVEL}.",
+        "slots": ["CALLSIGN","UNIT_DEPARTURE","CURRENT_LEVEL"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 5,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Climb and maintain {CURRENT_LEVEL}, {CALLSIGN}.",
+        "slots": ["CURRENT_LEVEL","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "CURRENT_LEVEL", "type": "mandatoryNumber" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "ICAO Doc 9432 Ch.4 §4.6 / Doc 4444 §4.11"
+  }
+]

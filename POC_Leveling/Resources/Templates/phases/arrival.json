@@ -1,0 +1,163 @@
+[
+  {
+    "id": "AR-01",
+    "name": "Destination ATIS Information Receipt",
+    "phase": "ARRIVAL",
+    "profile": ["IFR_COMMERCIAL", "VFR_LOCAL"],
+    "initiator": "ATC",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{DESTINATION_NAME} Information {ARR_ATIS_ID}. Time {TIME_UTC} UTC. Arrival runway {ARR_RUNWAY}. Wind {WIND_DIRECTION} degrees {WIND_SPEED} knots. Visibility {VISIBILITY}. Temperature {TEMPERATURE}, dew point {DEW_POINT}. QNH {QNH} hPa.",
+        "slots": ["DESTINATION_NAME","ARR_ATIS_ID","TIME_UTC","ARR_RUNWAY","WIND_DIRECTION","WIND_SPEED","VISIBILITY","TEMPERATURE","DEW_POINT","QNH"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Information {ARR_ATIS_ID} received, QNH {QNH}, runway {ARR_RUNWAY}.",
+        "slots": ["ARR_ATIS_ID","QNH","ARR_RUNWAY"],
+        "criticalReadback": [
+          { "slot": "ARR_ATIS_ID", "type": "mandatoryValue" },
+          { "slot": "QNH", "type": "mandatoryNumber" },
+          { "slot": "ARR_RUNWAY", "type": "mandatoryNumber" }
+        ]
+      }
+    ],
+    "_source": "ICAO Doc 9432 Ch.4 §4.7"
+  },
+  {
+    "id": "AR-02",
+    "name": "Descent Clearance and STAR Routing",
+    "phase": "ARRIVAL",
+    "profile": ["IFR_COMMERCIAL"],
+    "initiator": "ATC",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, descend and maintain {DESCENT_LEVEL}, via {STAR_PROCEDURE} arrival, QNH {QNH}.",
+        "slots": ["CALLSIGN","DESCENT_LEVEL","STAR_PROCEDURE","QNH"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Descend and maintain {DESCENT_LEVEL}, via {STAR_PROCEDURE} arrival, QNH {QNH}, {CALLSIGN}.",
+        "slots": ["DESCENT_LEVEL","STAR_PROCEDURE","QNH","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "DESCENT_LEVEL", "type": "mandatoryNumber" },
+          { "slot": "STAR_PROCEDURE", "type": "mandatoryValue" },
+          { "slot": "QNH", "type": "mandatoryNumber" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "Doc 9432 Ch.2 & Ch.4 readback rules"
+  },
+  {
+    "id": "AR-03",
+    "name": "VFR Inbound Call and Overhead Join",
+    "phase": "ARRIVAL",
+    "profile": ["VFR_LOCAL"],
+    "initiator": "PILOT",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_TOWER}, {CALLSIGN}, {CURRENT_POSITION}, {CURRENT_LEVEL}, inbound for landing, information {ARR_ATIS_ID}.",
+        "slots": ["UNIT_TOWER","CALLSIGN","CURRENT_POSITION","CURRENT_LEVEL","ARR_ATIS_ID"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, {UNIT_TOWER}, join overhead runway {ARR_RUNWAY}, QNH {QNH}.",
+        "slots": ["CALLSIGN","UNIT_TOWER","ARR_RUNWAY","QNH"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 3,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Join overhead runway {ARR_RUNWAY}, QNH {QNH}, {CALLSIGN}.",
+        "slots": ["ARR_RUNWAY","QNH","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "ARR_RUNWAY", "type": "mandatoryNumber" },
+          { "slot": "QNH", "type": "mandatoryNumber" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "ICAO Doc 9432 Ch.4 §4.7"
+  },
+  {
+    "id": "AR-04",
+    "name": "Transfer ke Approach Control",
+    "phase": "ARRIVAL",
+    "profile": ["IFR_COMMERCIAL"],
+    "initiator": "ATC",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, contact {UNIT_APPROACH} {APPROACH_FREQ}.",
+        "slots": ["CALLSIGN","UNIT_APPROACH","APPROACH_FREQ"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{APPROACH_FREQ}, {CALLSIGN}.",
+        "slots": ["APPROACH_FREQ","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "APPROACH_FREQ", "type": "mandatoryNumber" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "ICAO Doc 4444 §4.11.3"
+  },
+  {
+    "id": "AR-05",
+    "name": "Holding Instruction",
+    "phase": "ARRIVAL",
+    "profile": ["IFR_COMMERCIAL"],
+    "initiator": "ATC",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, hold at {HOLDING_FIX}, maintain {HOLDING_LEVEL}, inbound track {INBOUND_TRACK} degrees, {TURN_DIRECTION}-hand turns, expected approach time {EAT}.",
+        "slots": ["CALLSIGN","HOLDING_FIX","HOLDING_LEVEL","INBOUND_TRACK","TURN_DIRECTION","EAT"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Hold at {HOLDING_FIX}, maintain {HOLDING_LEVEL}, inbound {INBOUND_TRACK}, {TURN_DIRECTION}-hand turns, expected approach time {EAT}, {CALLSIGN}.",
+        "slots": ["HOLDING_FIX","HOLDING_LEVEL","INBOUND_TRACK","TURN_DIRECTION","EAT","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "HOLDING_FIX", "type": "mandatoryValue" },
+          { "slot": "HOLDING_LEVEL", "type": "mandatoryNumber" },
+          { "slot": "INBOUND_TRACK", "type": "mandatoryNumber" },
+          { "slot": "TURN_DIRECTION", "type": "mandatoryValue" },
+          { "slot": "EAT", "type": "mandatoryValue" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "Doc 9432 Ch.2 readback rules"
+  }
+]

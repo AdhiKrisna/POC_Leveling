@@ -1,0 +1,97 @@
+{
+  "icao": "WAWP",
+  "iata": "BWX",
+  "name": "Blimbingsari",
+  "city": "Banyuwangi",
+  "elevation_ft": 47,
+  "latitude": -8.3120,
+  "longitude": 114.3393,
+  "profile": "VFR_LOCAL",
+  "runways": [
+    {
+      "pair": ["08", "26"],
+      "designator": "08",
+      "reciprocal": "26",
+      "length_ft": 7382,
+      "width_ft": 98,
+      "surface": "ASP",
+      "heading_degT": 84,
+      "ils_available": false,
+      "holdingPoints": ["A1"],
+      "_source": "OurAirports bootstrap — verify against AIP WAWP AD 2.12"
+    }
+  ],
+  "units": {
+    "delivery": null,
+    "apron": null,
+    "ground": {
+      "callsign": "Banyuwangi Ground",
+      "frequency": "121.600",
+      "_source": "NEEDS AIP WAWP AD 2.18 verification",
+      "_status": "training-approx"
+    },
+    "tower": {
+      "callsign": "Banyuwangi Tower",
+      "frequency": "118.100",
+      "_source": "NEEDS AIP WAWP AD 2.18 verification",
+      "_status": "training-approx"
+    },
+    "approach": {
+      "callsign": "Banyuwangi Approach",
+      "frequency": "119.500",
+      "_source": "NEEDS AIP WAWP AD 2.18 verification",
+      "_status": "training-approx"
+    },
+    "departure": null,
+    "center": null,
+    "atis": null
+  },
+  "taxiways": [
+    {
+      "id": "Alpha",
+      "spoken": "Alfa",
+      "_source": "NEEDS AIP WAWP AD 2.24 aerodrome chart verification"
+    }
+  ],
+  "stands": [
+    {
+      "id": "1", "spoken": "stand one", "type": "GA", "apron": "General Aviation"
+    },
+    {
+      "id": "2", "spoken": "stand two", "type": "GA", "apron": "General Aviation"
+    },
+    {
+      "id": "3", "spoken": "stand three", "type": "GA", "apron": "General Aviation"
+    }
+  ],
+  "trainingAreas": [
+    {
+      "id": "Alpha",
+      "spoken": "Area Alfa",
+      "direction": "south",
+      "radial": 180,
+      "distanceNM": "10-20",
+      "altitudeFt": "2500-4000",
+      "_source": "Instructor-validated training convention — needs formal AIP or local SOP reference"
+    }
+  ],
+  "procedures": {
+    "sids": [],
+    "stars": [],
+    "approaches": [],
+    "holdings": []
+  },
+  "_meta": {
+    "datasetCycle": "NEEDS AIP AIRAC cycle date",
+    "status": "training-approx",
+    "verifiedBy": null,
+    "lastChecked": "2026-10-09",
+    "disclaimer": "For training simulation only. Not for operational use.",
+    "notes": [
+      "Frequencies are training approximations — verify against AIP WAWP AD 2.18",
+      "Taxiway layout needs aerodrome chart verification from AIP WAWP AD 2.24",
+      "Training area boundaries need instructor or local SOP validation",
+      "No SID/STAR/approach procedures — VFR local profile only"
+    ]
+  }
+}

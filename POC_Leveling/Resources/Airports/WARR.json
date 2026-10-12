@@ -1,0 +1,145 @@
+{
+  "icao": "WARR",
+  "iata": "SUB",
+  "name": "Juanda International Airport",
+  "city": "Surabaya / Sidoarjo",
+  "elevation_ft": 9,
+  "latitude": -7.3798,
+  "longitude": 112.7874,
+  "profile": "IFR_COMMERCIAL",
+  "runways": [
+    {
+      "pair": ["10", "28"],
+      "designator": "10",
+      "reciprocal": "28",
+      "length_ft": 9843,
+      "width_ft": 148,
+      "surface": "ASP",
+      "heading_degT": 99.3,
+      "ils_available": true,
+      "holdingPoints": ["N1", "N2"],
+      "_source": "AIP WARR AD 2.12"
+    }
+  ],
+  "units": {
+    "delivery": {
+      "callsign": "Surabaya Delivery",
+      "frequency": "121.900"
+    },
+    "apron": {
+      "callsign": "Surabaya Apron",
+      "frequency": "121.900"
+    },
+    "ground": {
+      "callsign": "Surabaya Ground",
+      "frequency": "118.900"
+    },
+    "tower": {
+      "callsign": "Surabaya Tower",
+      "frequency": "118.300"
+    },
+    "approach": {
+      "callsign": "Surabaya Approach",
+      "frequency": "123.550"
+    },
+    "departure": {
+      "callsign": "Surabaya Departure",
+      "frequency": "125.100"
+    },
+    "center": {
+      "callsign": "Surabaya Control",
+      "frequency": "124.000"
+    },
+    "atis": {
+      "callsign": "Surabaya Information",
+      "frequency": "128.200"
+    }
+  },
+  "taxiways": [
+    { "id": "November", "spoken": "November", "description": "North parallel taxiway" },
+    { "id": "November1", "spoken": "November One", "description": "Holding point Runway 10" },
+    { "id": "November3", "spoken": "November Three", "description": "Rapid exit taxiway Runway 10" },
+    { "id": "November4", "spoken": "November Four", "description": "Rapid exit taxiway Runway 28" },
+    { "id": "November6", "spoken": "November Six", "description": "Holding point Runway 28" },
+    { "id": "Bravo", "spoken": "Bravo", "description": "Crossing taxiway" }
+  ],
+  "stands": [
+    { "id": "2", "spoken": "Gate Two", "type": "DOMESTIC", "apron": "Terminal 1" },
+    { "id": "5", "spoken": "Gate Five", "type": "DOMESTIC", "apron": "Terminal 1" },
+    { "id": "8", "spoken": "Gate Eight", "type": "DOMESTIC", "apron": "Terminal 1" },
+    { "id": "11", "spoken": "Gate One One", "type": "INTERNATIONAL", "apron": "Terminal 2" }
+  ],
+  "procedures": {
+    "sids": [
+      {
+        "id": "SBY1B",
+        "name": "SURABAYA One Bravo",
+        "runway": "10",
+        "initialAltFt": 5000,
+        "entryFix": "SBY"
+      },
+      {
+        "id": "SBY1D",
+        "name": "SURABAYA One Delta",
+        "runway": "28",
+        "initialAltFt": 5000,
+        "entryFix": "SBY"
+      },
+      {
+        "id": "AMBOM1A",
+        "name": "AMBOM One Alfa",
+        "runway": "10",
+        "initialAltFt": 4000,
+        "entryFix": "AMBOM"
+      }
+    ],
+    "stars": [
+      {
+        "id": "POSOP1A",
+        "name": "POSOP One Alfa",
+        "runway": "10",
+        "entryFix": "POSOP",
+        "initialDescentFt": 10000
+      },
+      {
+        "id": "NIKAS1A",
+        "name": "NIKAS One Alfa",
+        "runway": "28",
+        "entryFix": "NIKAS",
+        "initialDescentFt": 10000
+      },
+      {
+        "id": "BLI1A",
+        "name": "BLI One Alfa",
+        "runway": "10",
+        "entryFix": "BLI",
+        "initialDescentFt": 11000
+      }
+    ],
+    "approaches": [
+      {
+        "id": "ILS10",
+        "type": "ILS",
+        "runway": "10",
+        "finalApproachFix": "WARKO",
+        "fafAltFt": 2500,
+        "da_mda_ft": 200,
+        "missedApproachAltFt": 3000,
+        "missedApproachHeading": 100
+      }
+    ],
+    "holdings": [
+      {
+        "fix": "SBY",
+        "inboundTrack": 100,
+        "turns": "right",
+        "altFt": 6000,
+        "published": true
+      }
+    ]
+  },
+  "_meta": {
+    "datasetCycle": "2026-AIRAC",
+    "status": "verified"
+  }
+}

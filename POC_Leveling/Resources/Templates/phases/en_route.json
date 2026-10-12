@@ -1,0 +1,191 @@
+[
+  {
+    "id": "ER-01",
+    "name": "Initial Check-in After Handoff",
+    "phase": "EN_ROUTE",
+    "profile": ["VFR_LOCAL", "IFR_COMMERCIAL"],
+    "initiator": "PILOT",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_CONTROL}, {CALLSIGN}, {LEVEL_STATUS} {CURRENT_LEVEL}, {ROUTE_CONTEXT}.",
+        "slots": ["UNIT_CONTROL","CALLSIGN","LEVEL_STATUS","CURRENT_LEVEL","ROUTE_CONTEXT"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, {UNIT_CONTROL}, radar contact, maintain {CURRENT_LEVEL}.",
+        "slots": ["CALLSIGN","UNIT_CONTROL","CURRENT_LEVEL"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 3,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Maintain {CURRENT_LEVEL}, {CALLSIGN}.",
+        "slots": ["CURRENT_LEVEL","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "CURRENT_LEVEL", "type": "mandatoryNumber" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "Doc 4444 §4.11.3 for initial call after transfer"
+  },
+  {
+    "id": "ER-02",
+    "name": "Procedural Position Report",
+    "phase": "EN_ROUTE",
+    "profile": ["VFR_LOCAL", "IFR_COMMERCIAL"],
+    "initiator": "PILOT",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, report position.",
+        "slots": ["CALLSIGN"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{CALLSIGN}, {CURRENT_POSITION}, {TIME_UTC}, {CURRENT_LEVEL}, estimating {NEXT_POSITION} {NEXT_ETA}.",
+        "slots": ["CALLSIGN","CURRENT_POSITION","TIME_UTC","CURRENT_LEVEL","NEXT_POSITION","NEXT_ETA"],
+        "criticalReadback": [
+          { "slot": "CURRENT_POSITION", "type": "mandatoryValue" },
+          { "slot": "TIME_UTC", "type": "mandatoryValue" },
+          { "slot": "CURRENT_LEVEL", "type": "mandatoryNumber" },
+          { "slot": "NEXT_POSITION", "type": "mandatoryValue" },
+          { "slot": "NEXT_ETA", "type": "mandatoryValue" }
+        ]
+      }
+    ],
+    "_source": "ICAO Doc 9432 Ch.3 §3.4"
+  },
+  {
+    "id": "ER-03",
+    "name": "Weather Deviation Request (CB Avoidance)",
+    "phase": "EN_ROUTE",
+    "profile": ["IFR_COMMERCIAL", "VFR_LOCAL"],
+    "initiator": "PILOT",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_CONTROL}, {CALLSIGN}, request deviation {REQUESTED_DEVIATION_DISTANCE} miles {REQUESTED_DEVIATION_DIRECTION} of track due weather.",
+        "slots": ["UNIT_CONTROL","CALLSIGN","REQUESTED_DEVIATION_DISTANCE","REQUESTED_DEVIATION_DIRECTION"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, deviation {APPROVED_DEVIATION_DISTANCE} miles {APPROVED_DEVIATION_DIRECTION} of track approved, report when able to resume own navigation.",
+        "slots": ["CALLSIGN","APPROVED_DEVIATION_DISTANCE","APPROVED_DEVIATION_DIRECTION"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 3,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Deviation {APPROVED_DEVIATION_DISTANCE} miles {APPROVED_DEVIATION_DIRECTION} of track approved, will report resuming navigation, {CALLSIGN}.",
+        "slots": ["APPROVED_DEVIATION_DISTANCE","APPROVED_DEVIATION_DIRECTION","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "APPROVED_DEVIATION_DISTANCE", "type": "mandatoryNumber" },
+          { "slot": "APPROVED_DEVIATION_DIRECTION", "type": "mandatoryValue" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "ICAO Doc 4444 §15.2.3 Weather deviation"
+  },
+  {
+    "id": "ER-04",
+    "name": "Request Higher Level (Step Climb)",
+    "phase": "EN_ROUTE",
+    "profile": ["IFR_COMMERCIAL"],
+    "initiator": "PILOT",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_CONTROL}, {CALLSIGN}, request climb {REQUESTED_LEVEL}.",
+        "slots": ["UNIT_CONTROL","CALLSIGN","REQUESTED_LEVEL"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, climb and maintain {REQUESTED_LEVEL}.",
+        "slots": ["CALLSIGN","REQUESTED_LEVEL"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 3,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Climb and maintain {REQUESTED_LEVEL}, {CALLSIGN}.",
+        "slots": ["REQUESTED_LEVEL","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "REQUESTED_LEVEL", "type": "mandatoryNumber" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "ICAO Doc 9432 Ch.3 §3.3"
+  },
+  {
+    "id": "ER-05",
+    "name": "Sector Transfer ke Adjacent Control",
+    "phase": "EN_ROUTE",
+    "profile": ["IFR_COMMERCIAL"],
+    "initiator": "ATC",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, contact {UNIT_CONTROL} {CONTROL_FREQ}.",
+        "slots": ["CALLSIGN","UNIT_CONTROL","CONTROL_FREQ"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{CONTROL_FREQ}, {CALLSIGN}.",
+        "slots": ["CONTROL_FREQ","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "CONTROL_FREQ", "type": "mandatoryNumber" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      },
+      {
+        "turn": 3,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_CONTROL}, {CALLSIGN}, {CURRENT_LEVEL}.",
+        "slots": ["UNIT_CONTROL","CALLSIGN","CURRENT_LEVEL"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 4,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, {UNIT_CONTROL}, radar contact.",
+        "slots": ["CALLSIGN","UNIT_CONTROL"],
+        "criticalReadback": []
+      }
+    ],
+    "_source": "ICAO Doc 4444 §4.11.3"
+  }
+]

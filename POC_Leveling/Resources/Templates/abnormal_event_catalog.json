@@ -1,0 +1,83 @@
+[
+  {
+    "id": "ABN-01",
+    "name": "Amended Taxi Clearance",
+    "eligiblePhases": ["PRE_DEPARTURE", "LANDING"],
+    "triggerPoint": "after_initial_taxi_clearance",
+    "requiredData": ["taxiRouteAlternative", "holdShortTarget", "airportDataset"],
+    "atcTemplate": "{CALLSIGN}, amended taxi instruction, taxi via {ALTERNATIVE_TAXI_ROUTE}, hold short of runway {HOLD_SHORT_RUNWAY}.",
+    "pilotExpectedTemplate": "Taxi via {ALTERNATIVE_TAXI_ROUTE}, hold short runway {HOLD_SHORT_RUNWAY}, {CALLSIGN}.",
+    "criticalSlots": ["ALTERNATIVE_TAXI_ROUTE", "HOLD_SHORT_RUNWAY", "CALLSIGN"],
+    "nextState": "TAXI_AMENDED",
+    "source": "Doc 4444 Ch.12 aerodrome control phraseology",
+    "requiresLocalData": true
+  },
+  {
+    "id": "ABN-02",
+    "name": "ATIS Update",
+    "eligiblePhases": ["PRE_DEPARTURE", "ARRIVAL"],
+    "triggerPoint": "before_clearance_or_descent",
+    "requiredData": ["newAtisDesignator", "changedAtisElements"],
+    "atcTemplate": "{CALLSIGN}, new information {NEW_ATIS_ID} current, advise receipt.",
+    "pilotExpectedTemplate": "Information {NEW_ATIS_ID} received, {CALLSIGN}.",
+    "criticalSlots": ["NEW_ATIS_ID", "CALLSIGN"],
+    "nextState": "ATIS_UPDATED",
+    "source": "ATIS acknowledgement practice; local AIP wording should be verified",
+    "requiresLocalData": false
+  },
+  {
+    "id": "ABN-03",
+    "name": "Runway Change Before Line-up",
+    "eligiblePhases": ["PRE_DEPARTURE", "DEPARTURE"],
+    "triggerPoint": "before_line_up",
+    "requiredData": ["newRunway", "newHoldingPoint", "validTaxiRouteToNewRunway"],
+    "atcTemplate": "{CALLSIGN}, runway change, runway {NEW_RUNWAY} now in use, taxi to holding point {NEW_HOLDING_POINT} runway {NEW_RUNWAY} via {NEW_TAXI_ROUTE}.",
+    "pilotExpectedTemplate": "Taxi to holding point {NEW_HOLDING_POINT} runway {NEW_RUNWAY} via {NEW_TAXI_ROUTE}, {CALLSIGN}.",
+    "criticalSlots": ["NEW_RUNWAY", "NEW_HOLDING_POINT", "NEW_TAXI_ROUTE", "CALLSIGN"],
+    "nextState": "RUNWAY_CHANGED",
+    "source": "Doc 4444 Ch.12 taxi/runway phraseology; local layout required",
+    "requiresLocalData": true,
+    "constraint": "Only select a different runway that exists in the same airport dataset and has a valid route from current position."
+  },
+  {
+    "id": "ABN-04",
+    "name": "Traffic Delay / Line Up and Wait",
+    "eligiblePhases": ["DEPARTURE"],
+    "triggerPoint": "at_holding_point",
+    "requiredData": ["runway", "precedingTrafficDescription"],
+    "atcTemplate": "{CALLSIGN}, runway {RUNWAY}, line up and wait, traffic {TRAFFIC_DESCRIPTION}.",
+    "pilotExpectedTemplate": "Runway {RUNWAY}, line up and wait, {CALLSIGN}.",
+    "criticalSlots": ["RUNWAY", "LINE_UP_WAIT", "CALLSIGN"],
+    "nextState": "LINE_UP_WAITING",
+    "source": "Doc 4444 Ch.12 / Doc 9432 Ch.4",
+    "requiresLocalData": false
+  },
+  {
+    "id": "ABN-05",
+    "name": "Holding Due Traffic",
+    "eligiblePhases": ["ARRIVAL"],
+    "triggerPoint": "before_approach_transfer",
+    "requiredData": ["holdingFix", "holdingLevel", "inboundTrack", "turnDirection", "eat"],
+    "atcTemplate": "{CALLSIGN}, hold at {HOLDING_FIX}, maintain {HOLDING_LEVEL}, inbound track {INBOUND_TRACK} degrees, {TURN_DIRECTION}-hand turns, expected approach time {EAT}.",
+    "pilotExpectedTemplate": "Hold at {HOLDING_FIX}, maintain {HOLDING_LEVEL}, inbound {INBOUND_TRACK}, {TURN_DIRECTION}-hand turns, expected approach time {EAT}, {CALLSIGN}.",
+    "criticalSlots": ["HOLDING_FIX", "HOLDING_LEVEL", "INBOUND_TRACK", "TURN_DIRECTION", "EAT", "CALLSIGN"],
+    "nextState": "HOLDING",
+    "source": "Holding phraseology/procedure must be tied to AIP chart or instructor-approved lesson record",
+    "requiresLocalData": true
+  },
+  {
+    "id": "ABN-06",
+    "name": "Go-Around Due Runway Occupancy",
+    "eligiblePhases": ["APPROACH"],
+    "triggerPoint": "on_final_before_landing_clearance",
+    "requiredData": ["missedApproachInitialAltitude", "missedApproachInstruction"],
+    "atcTemplate": "{CALLSIGN}, go around, traffic still on runway.",
+    "pilotExpectedTemplate": "Going around, {CALLSIGN}.",
+    "followUpAtcTemplate": "{CALLSIGN}, climb straight ahead {MISSED_ALTITUDE}, {MISSED_INSTRUCTION}.",
+    "followUpPilotTemplate": "Climb straight ahead {MISSED_ALTITUDE}, {MISSED_INSTRUCTION}, {CALLSIGN}.",
+    "criticalSlots": ["GOING_AROUND", "MISSED_ALTITUDE", "MISSED_INSTRUCTION", "CALLSIGN"],
+    "nextState": "GO_AROUND",
+    "source": "Doc 9432 Ch.4 §4.7 / Doc 4444 Ch.12",
+    "requiresLocalData": true
+  }
+]

@@ -1,0 +1,209 @@
+[
+  {
+    "id": "PD-01",
+    "name": "ATIS Information Receipt",
+    "phase": "PRE_DEPARTURE",
+    "profile": ["VFR_LOCAL", "IFR_COMMERCIAL"],
+    "initiator": "ATC",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{AIRPORT_NAME} Information {ATIS_ID}. Time {TIME_UTC} UTC. Runway {RUNWAY} in use. Wind {WIND_DIRECTION} degrees {WIND_SPEED} knots. Visibility {VISIBILITY}. Cloud {CLOUD_CONDITION}. Temperature {TEMPERATURE}, dew point {DEW_POINT}. QNH {QNH} hPa. On initial contact advise information {ATIS_ID} received.",
+        "slots": ["AIRPORT_NAME","ATIS_ID","TIME_UTC","RUNWAY","WIND_DIRECTION","WIND_SPEED","VISIBILITY","CLOUD_CONDITION","TEMPERATURE","DEW_POINT","QNH"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Information {ATIS_ID} received, QNH {QNH}, runway {RUNWAY}.",
+        "slots": ["ATIS_ID","QNH","RUNWAY"],
+        "criticalReadback": [
+          { "slot": "ATIS_ID", "type": "mandatoryValue" },
+          { "slot": "QNH", "type": "mandatoryNumber" },
+          { "slot": "RUNWAY", "type": "mandatoryNumber" }
+        ]
+      }
+    ],
+    "_source": "ICAO Annex 11 / Doc 9432 Ch.4"
+  },
+  {
+    "id": "PD-02",
+    "name": "IFR Route Clearance (CRAFT Formula)",
+    "phase": "PRE_DEPARTURE",
+    "profile": ["IFR_COMMERCIAL"],
+    "initiator": "PILOT",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_DELIVERY}, {CALLSIGN}, stand {STAND}, information {ATIS_ID}, request IFR clearance to {DESTINATION_NAME}, ready to copy.",
+        "slots": ["UNIT_DELIVERY","CALLSIGN","STAND","ATIS_ID","DESTINATION_NAME"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, {UNIT_DELIVERY}, cleared to {DESTINATION_NAME} via {SID_PROCEDURE} departure, flight planned route. Climb initially {INITIAL_ALT}, departure frequency {DEP_FREQ}, squawk {SQUAWK}.",
+        "slots": ["CALLSIGN","UNIT_DELIVERY","DESTINATION_NAME","SID_PROCEDURE","INITIAL_ALT","DEP_FREQ","SQUAWK"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 3,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Cleared to {DESTINATION_NAME} via {SID_PROCEDURE} departure, flight planned route, climb initially {INITIAL_ALT}, departure frequency {DEP_FREQ}, squawk {SQUAWK}, {CALLSIGN}.",
+        "slots": ["DESTINATION_NAME","SID_PROCEDURE","INITIAL_ALT","DEP_FREQ","SQUAWK","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "DESTINATION_NAME", "type": "mandatoryValue" },
+          { "slot": "SID_PROCEDURE", "type": "mandatoryValue" },
+          { "slot": "INITIAL_ALT", "type": "mandatoryNumber" },
+          { "slot": "DEP_FREQ", "type": "mandatoryNumber" },
+          { "slot": "SQUAWK", "type": "mandatoryNumber" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      },
+      {
+        "turn": 4,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, readback is correct. Contact {UNIT_GROUND} {GROUND_FREQ} for pushback.",
+        "slots": ["CALLSIGN","UNIT_GROUND","GROUND_FREQ"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 5,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_GROUND} {GROUND_FREQ}, {CALLSIGN}.",
+        "slots": ["UNIT_GROUND","GROUND_FREQ","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "GROUND_FREQ", "type": "mandatoryNumber" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "FAA AIM 4-4-3 CRAFT / ICAO Doc 9432 Ch.4"
+  },
+  {
+    "id": "PD-03",
+    "name": "Request Start-up (VFR Local)",
+    "phase": "PRE_DEPARTURE",
+    "profile": ["VFR_LOCAL"],
+    "initiator": "PILOT",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_GROUND}, {CALLSIGN}, stand {STAND}, {AIRCRAFT_TYPE}, POB {POB}, request start-up for local training flight, information {ATIS_ID}.",
+        "slots": ["UNIT_GROUND","CALLSIGN","STAND","AIRCRAFT_TYPE","POB","ATIS_ID"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, {UNIT_GROUND}, start-up approved, QNH {QNH}.",
+        "slots": ["CALLSIGN","UNIT_GROUND","QNH"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 3,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Start-up approved, QNH {QNH}, {CALLSIGN}.",
+        "slots": ["QNH","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "APPROVAL", "keyword": "start-up approved", "type": "mandatoryKeyword" },
+          { "slot": "QNH", "type": "mandatoryNumber" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "Doc 9432 Ch.4 / Doc 4444 Ch.12"
+  },
+  {
+    "id": "PD-04",
+    "name": "Pushback and Start-up Request (IFR Commercial)",
+    "phase": "PRE_DEPARTURE",
+    "profile": ["IFR_COMMERCIAL"],
+    "initiator": "PILOT",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_GROUND}, {CALLSIGN}, stand {STAND}, request start-up and pushback, face {TURN_DIRECTION}.",
+        "slots": ["UNIT_GROUND","CALLSIGN","STAND","TURN_DIRECTION"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, {UNIT_GROUND}, start-up and pushback approved, face {TURN_DIRECTION}, QNH {QNH}.",
+        "slots": ["CALLSIGN","UNIT_GROUND","TURN_DIRECTION","QNH"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 3,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Start-up and pushback approved, face {TURN_DIRECTION}, QNH {QNH}, {CALLSIGN}.",
+        "slots": ["TURN_DIRECTION","QNH","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "APPROVAL", "keyword": "start-up and pushback approved", "type": "mandatoryKeyword" },
+          { "slot": "TURN_DIRECTION", "type": "mandatoryValue" },
+          { "slot": "QNH", "type": "mandatoryNumber" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "ICAO Doc 9432 Ch.4 §4.3"
+  },
+  {
+    "id": "PD-06",
+    "name": "Taxi Clearance",
+    "phase": "PRE_DEPARTURE",
+    "profile": ["VFR_LOCAL", "IFR_COMMERCIAL"],
+    "initiator": "PILOT",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_GROUND}, {CALLSIGN}, stand {STAND}, ready to taxi.",
+        "slots": ["UNIT_GROUND","CALLSIGN","STAND"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, taxi to holding point {HOLDING_POINT} runway {RUNWAY} via {TAXI_ROUTE}, hold short runway {RUNWAY}.",
+        "slots": ["CALLSIGN","HOLDING_POINT","RUNWAY","TAXI_ROUTE"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 3,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Taxi to holding point {HOLDING_POINT} runway {RUNWAY} via {TAXI_ROUTE}, hold short runway {RUNWAY}, {CALLSIGN}.",
+        "slots": ["HOLDING_POINT","RUNWAY","TAXI_ROUTE","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "HOLDING_POINT", "type": "mandatoryValue" },
+          { "slot": "RUNWAY", "type": "mandatoryNumber", "label": "runway" },
+          { "slot": "TAXI_ROUTE", "type": "mandatoryValue" },
+          { "slot": "HOLD_SHORT_RUNWAY", "keyword": "hold short runway", "type": "mandatoryKeyword" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "Doc 4444 Ch.12 p.12-24 / Doc 9432 Ch.4"
+  }
+]

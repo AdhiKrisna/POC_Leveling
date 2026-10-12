@@ -1,0 +1,139 @@
+[
+  {
+    "id": "EF-A-return-to-field",
+    "eventClass": "DISTRESS",
+    "eventType": "ENGINE_FAILURE",
+    "severity": "MAYDAY",
+    "eligiblePhases": ["DEPARTURE", "EN_ROUTE", "APPROACH"],
+    "trigger": {
+      "pilotIntent": "RETURN_TO_FIELD",
+      "minimumPilotSlots": ["callsign", "aircraftType", "nature", "position", "altitude", "intention"]
+    },
+    "requiredContext": ["runway", "windDirection", "windSpeed", "qnh"],
+    "atcResponses": [
+      {
+        "id": "acknowledge-priority-return",
+        "template": "{CALLSIGN}, {UNIT}, roger MAYDAY, runway {RUNWAY}, wind {WIND_DIRECTION} degrees {WIND_SPEED} knots, QNH {QNH}, you are number one, report field in sight if able.",
+        "purpose": ["acknowledge", "priority", "usableAirportInformation"],
+        "pilotExpectedTemplate": "Runway {RUNWAY}, QNH {QNH}, {CALLSIGN}.",
+        "criticalReadback": ["RUNWAY", "QNH", "CALLSIGN"],
+        "nextState": "EMERGENCY_RETURN_APPROACH"
+      }
+    ],
+    "limits": [
+      "Do not infer aircraft performance or guarantee reachability.",
+      "Do not state emergency services activated unless local procedure data validates that branch."
+    ],
+    "source": "ICAO Doc 9432 Ch.9 supports distress message structure; ATC handling workflow requires local/instructor validation.",
+    "localProcedureRequired": true
+  },
+  {
+    "id": "EF-B-intention-unknown",
+    "eventClass": "DISTRESS",
+    "eventType": "ENGINE_FAILURE",
+    "severity": "MAYDAY",
+    "eligiblePhases": ["DEPARTURE", "EN_ROUTE", "APPROACH"],
+    "trigger": {
+      "pilotIntent": "UNKNOWN",
+      "minimumPilotSlots": ["callsign", "nature"]
+    },
+    "requiredContext": [],
+    "atcResponses": [
+      {
+        "id": "request-intentions",
+        "template": "{CALLSIGN}, {UNIT}, roger MAYDAY, state intentions.",
+        "purpose": ["acknowledge", "requestMinimumInformation"],
+        "pilotExpectedTemplate": "{PILOT_INTENTION}, {CALLSIGN}.",
+        "criticalReadback": ["PILOT_INTENTION", "CALLSIGN"],
+        "nextState": "AWAIT_EMERGENCY_INTENT"
+      }
+    ],
+    "limits": [
+      "Ask only for information not already transmitted.",
+      "Do not ask a long list of questions when pilot workload is high."
+    ],
+    "source": "ICAO Doc 9432 Ch.9 distress message structure.",
+    "localProcedureRequired": false
+  },
+  {
+    "id": "EF-C-nearest-suitable-requested",
+    "eventClass": "DISTRESS",
+    "eventType": "ENGINE_FAILURE",
+    "severity": "MAYDAY",
+    "eligiblePhases": ["DEPARTURE", "EN_ROUTE"],
+    "trigger": {
+      "pilotIntent": "REQUEST_NEAREST_SUITABLE_AERODROME",
+      "minimumPilotSlots": ["callsign", "request"]
+    },
+    "requiredContext": ["candidateAerodrome.name", "candidateAerodrome.direction", "candidateAerodrome.distanceNM", "candidateAerodrome.runway", "windDirection", "windSpeed", "qnh"],
+    "atcResponses": [
+      {
+        "id": "provide-curated-candidate-information",
+        "template": "{CALLSIGN}, {AERODROME_NAME} is {AERODROME_DIRECTION} at {AERODROME_DISTANCE} miles, runway {RUNWAY} available, wind {WIND_DIRECTION} degrees {WIND_SPEED} knots, QNH {QNH}.",
+        "purpose": ["provideRequestedInformation"],
+        "pilotExpectedTemplate": "Proceeding {AERODROME_NAME}, {CALLSIGN}.",
+        "criticalReadback": ["AERODROME_NAME", "CALLSIGN"],
+        "nextState": "AWAIT_DIVERSION_DECISION"
+      }
+    ],
+    "limits": [
+      "Candidate aerodromes must come from instructor-curated route/area data.",
+      "The app must not calculate or claim that an airport is reachable.",
+      "Do not generate this response if no validated candidateAerodrome exists."
+    ],
+    "source": "Training design rule; local/instructor validation required.",
+    "localProcedureRequired": true
+  },
+  {
+    "id": "EF-D-forced-landing",
+    "eventClass": "DISTRESS",
+    "eventType": "ENGINE_FAILURE",
+    "severity": "MAYDAY",
+    "eligiblePhases": ["DEPARTURE", "EN_ROUTE", "APPROACH"],
+    "trigger": {
+      "pilotIntent": "FORCED_LANDING",
+      "minimumPilotSlots": ["callsign", "nature", "intention", "position"]
+    },
+    "requiredContext": [],
+    "atcResponses": [
+      {
+        "id": "acknowledge-forced-landing",
+        "template": "{CALLSIGN}, {UNIT}, roger MAYDAY, say intended landing area if able.",
+        "purpose": ["acknowledge", "requestMinimumInformation"],
+        "pilotExpectedTemplate": "Intended landing area {LANDING_AREA}, {CALLSIGN}.",
+        "criticalReadback": ["LANDING_AREA", "CALLSIGN"],
+        "nextState": "FORCED_LANDING_REPORTED"
+      }
+    ],
+    "limits": [
+      "Skip the question if intended landing area was already reported.",
+      "Emergency-services wording must only appear in a locally validated template."
+    ],
+    "source": "ICAO Doc 9432 Ch.9 distress message structure.",
+    "localProcedureRequired": true
+  },
+  {
+    "id": "MED-A-priority-landing",
+    "eventClass": "URGENCY",
+    "eventType": "MEDICAL",
+    "severity": "PAN_PAN",
+    "eligiblePhases": ["EN_ROUTE", "ARRIVAL", "APPROACH"],
+    "trigger": {
+      "pilotIntent": "PRIORITY_LANDING",
+      "minimumPilotSlots": ["callsign", "nature", "position", "altitude", "request"]
+    },
+    "requiredContext": ["runway", "windDirection", "windSpeed", "qnh"],
+    "atcResponses": [
+      {
+        "id": "acknowledge-priority-medical",
+        "template": "{CALLSIGN}, {UNIT}, roger PAN PAN, runway {RUNWAY}, wind {WIND_DIRECTION} degrees {WIND_SPEED} knots, QNH {QNH}, you are number one.",
+        "purpose": ["acknowledge", "priority", "usableAirportInformation"],
+        "pilotExpectedTemplate": "Runway {RUNWAY}, QNH {QNH}, {CALLSIGN}.",
+        "criticalReadback": ["RUNWAY", "QNH", "CALLSIGN"],
+        "nextState": "PRIORITY_APPROACH"
+      }
+    ],
+    "source": "ICAO Doc 9432 Ch.9 urgency message structure; landing handling requires instructor validation.",
+    "localProcedureRequired": true
+  }
+]

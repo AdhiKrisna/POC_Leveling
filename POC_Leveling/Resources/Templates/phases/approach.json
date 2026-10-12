@@ -1,0 +1,233 @@
+[
+  {
+    "id": "AP-01",
+    "name": "ILS Approach Clearance",
+    "phase": "APPROACH",
+    "profile": ["IFR_COMMERCIAL"],
+    "initiator": "ATC",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, cleared ILS runway {ARR_RUNWAY} approach, report established.",
+        "slots": ["CALLSIGN","ARR_RUNWAY"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Cleared ILS runway {ARR_RUNWAY} approach, will report established, {CALLSIGN}.",
+        "slots": ["ARR_RUNWAY","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "ARR_RUNWAY", "type": "mandatoryNumber" },
+          { "slot": "APPROACH_CLEARANCE", "keyword": "cleared ILS runway", "type": "mandatoryKeyword" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "ICAO Doc 9432 Ch.4 §4.7"
+  },
+  {
+    "id": "AP-02",
+    "name": "Established on Localizer and Tower Handoff",
+    "phase": "APPROACH",
+    "profile": ["IFR_COMMERCIAL"],
+    "initiator": "PILOT",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_APPROACH}, {CALLSIGN}, established on localizer runway {ARR_RUNWAY}.",
+        "slots": ["UNIT_APPROACH","CALLSIGN","ARR_RUNWAY"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, contact {UNIT_TOWER} {TOWER_FREQ}.",
+        "slots": ["CALLSIGN","UNIT_TOWER","TOWER_FREQ"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 3,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{TOWER_FREQ}, {CALLSIGN}.",
+        "slots": ["TOWER_FREQ","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "TOWER_FREQ", "type": "mandatoryNumber" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "ICAO Doc 4444 §4.11.3 & Doc 9432"
+  },
+  {
+    "id": "AP-03",
+    "name": "VFR Circuit Report (Downwind)",
+    "phase": "APPROACH",
+    "profile": ["VFR_LOCAL"],
+    "initiator": "PILOT",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_TOWER}, {CALLSIGN}, downwind runway {ARR_RUNWAY}.",
+        "slots": ["UNIT_TOWER","CALLSIGN","ARR_RUNWAY"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, {UNIT_TOWER}, report final runway {ARR_RUNWAY}.",
+        "slots": ["CALLSIGN","UNIT_TOWER","ARR_RUNWAY"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 3,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Report final runway {ARR_RUNWAY}, {CALLSIGN}.",
+        "slots": ["ARR_RUNWAY","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "ARR_RUNWAY", "type": "mandatoryNumber" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "ICAO Doc 9432 Ch.4 §4.7"
+  },
+  {
+    "id": "AP-06",
+    "name": "Cleared to Land",
+    "phase": "APPROACH",
+    "profile": ["VFR_LOCAL", "IFR_COMMERCIAL"],
+    "initiator": "PILOT",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_TOWER}, {CALLSIGN}, final runway {ARR_RUNWAY}.",
+        "slots": ["UNIT_TOWER","CALLSIGN","ARR_RUNWAY"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, runway {ARR_RUNWAY}, wind {WIND_DIRECTION} degrees {WIND_SPEED} knots, cleared to land.",
+        "slots": ["CALLSIGN","ARR_RUNWAY","WIND_DIRECTION","WIND_SPEED"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 3,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Runway {ARR_RUNWAY}, cleared to land, {CALLSIGN}.",
+        "slots": ["ARR_RUNWAY","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "ARR_RUNWAY", "type": "mandatoryNumber" },
+          { "slot": "CLEARED_TO_LAND", "keyword": "cleared to land", "type": "mandatoryKeyword" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "Doc 9432 Ch.4 §4.7 / Doc 4444 Ch.12"
+  },
+  {
+    "id": "AP-07",
+    "name": "Go-Around (ATC Initiated)",
+    "phase": "APPROACH",
+    "profile": ["VFR_LOCAL", "IFR_COMMERCIAL"],
+    "initiator": "ATC",
+    "isAbnormal": true,
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, go around, {GO_AROUND_REASON}.",
+        "slots": ["CALLSIGN","GO_AROUND_REASON"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Going around, {CALLSIGN}.",
+        "slots": ["CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "GOING_AROUND", "keyword": "going around", "type": "mandatoryKeyword" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      },
+      {
+        "turn": 3,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, climb straight ahead {MISSED_ALT}, {MISSED_INSTRUCTION}.",
+        "slots": ["CALLSIGN","MISSED_ALT","MISSED_INSTRUCTION"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 4,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Climb straight ahead {MISSED_ALT}, {MISSED_INSTRUCTION}, {CALLSIGN}.",
+        "slots": ["MISSED_ALT","MISSED_INSTRUCTION","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "MISSED_ALT", "type": "mandatoryNumber" },
+          { "slot": "MISSED_INSTRUCTION", "type": "mandatoryValue" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "Doc 9432 Ch.4 §4.7 / Doc 4444 Ch.12 p.12-27"
+  },
+  {
+    "id": "AP-08",
+    "name": "Radar Vectoring for Second Approach",
+    "phase": "APPROACH",
+    "profile": ["IFR_COMMERCIAL", "VFR_LOCAL"],
+    "initiator": "ATC",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_APPROACH}, {CALLSIGN}, missed approach, passing {MISSED_ALT}, request vectors for second approach.",
+        "slots": ["UNIT_APPROACH","CALLSIGN","MISSED_ALT"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, {UNIT_APPROACH}, radar contact, fly heading {DOWNWIND_HEADING}, descend to {INTERCEPT_ALT}, vectoring for ILS runway {ARR_RUNWAY}.",
+        "slots": ["CALLSIGN","UNIT_APPROACH","DOWNWIND_HEADING","INTERCEPT_ALT","ARR_RUNWAY"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 3,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Heading {DOWNWIND_HEADING}, descend {INTERCEPT_ALT}, vectoring for ILS runway {ARR_RUNWAY}, {CALLSIGN}.",
+        "slots": ["DOWNWIND_HEADING","INTERCEPT_ALT","ARR_RUNWAY","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "DOWNWIND_HEADING", "type": "mandatoryNumber" },
+          { "slot": "INTERCEPT_ALT", "type": "mandatoryNumber" },
+          { "slot": "ARR_RUNWAY", "type": "mandatoryNumber" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "ICAO Doc 4444 §8.6 Radar Vectoring"
+  }
+]

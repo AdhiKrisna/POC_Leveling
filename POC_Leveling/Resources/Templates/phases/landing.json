@@ -1,0 +1,132 @@
+[
+  {
+    "id": "LD-01",
+    "name": "Vacate Runway Instruction",
+    "phase": "LANDING",
+    "profile": ["VFR_LOCAL", "IFR_COMMERCIAL"],
+    "initiator": "ATC",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, vacate {EXIT_DIRECTION} via {EXIT_TAXIWAY}, when vacated contact {UNIT_GROUND} {GROUND_FREQ}.",
+        "slots": ["CALLSIGN","EXIT_DIRECTION","EXIT_TAXIWAY","UNIT_GROUND","GROUND_FREQ"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Vacate {EXIT_DIRECTION} via {EXIT_TAXIWAY}, contact {UNIT_GROUND} {GROUND_FREQ} when vacated, {CALLSIGN}.",
+        "slots": ["EXIT_DIRECTION","EXIT_TAXIWAY","UNIT_GROUND","GROUND_FREQ","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "EXIT_TAXIWAY", "type": "mandatoryValue" },
+          { "slot": "GROUND_FREQ", "type": "mandatoryNumber" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "Doc 4444 Ch.12 p.12-28 / Doc 9432 Ch.4"
+  },
+  {
+    "id": "LD-02",
+    "name": "Runway Vacated Report and Transfer",
+    "phase": "LANDING",
+    "profile": ["VFR_LOCAL", "IFR_COMMERCIAL"],
+    "initiator": "PILOT",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_GROUND}, {CALLSIGN}, runway {ARR_RUNWAY} vacated via {EXIT_TAXIWAY}.",
+        "slots": ["UNIT_GROUND","CALLSIGN","ARR_RUNWAY","EXIT_TAXIWAY"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, {UNIT_GROUND}, roger.",
+        "slots": ["CALLSIGN","UNIT_GROUND"],
+        "criticalReadback": []
+      }
+    ],
+    "_source": "Doc 4444 Ch.12 / Doc 9432 Ch.4"
+  },
+  {
+    "id": "LD-03",
+    "name": "Taxi to Gate and Parking Stand",
+    "phase": "LANDING",
+    "profile": ["VFR_LOCAL", "IFR_COMMERCIAL"],
+    "initiator": "PILOT",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_GROUND}, {CALLSIGN}, request taxi to {DESTINATION_STAND}.",
+        "slots": ["UNIT_GROUND","CALLSIGN","DESTINATION_STAND"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, taxi to {DESTINATION_STAND} via {TAXI_IN_ROUTE}.",
+        "slots": ["CALLSIGN","DESTINATION_STAND","TAXI_IN_ROUTE"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 3,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Taxi to {DESTINATION_STAND} via {TAXI_IN_ROUTE}, {CALLSIGN}.",
+        "slots": ["DESTINATION_STAND","TAXI_IN_ROUTE","CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "DESTINATION_STAND", "type": "mandatoryValue" },
+          { "slot": "TAXI_IN_ROUTE", "type": "mandatoryValue" },
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "Doc 4444 Ch.12 / Doc 9432 Ch.4"
+  },
+  {
+    "id": "LD-04",
+    "name": "Parking Complete and Flight Plan Closure",
+    "phase": "LANDING",
+    "profile": ["VFR_LOCAL", "IFR_COMMERCIAL"],
+    "initiator": "PILOT",
+    "exchanges": [
+      {
+        "turn": 1,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "{UNIT_GROUND}, {CALLSIGN}, {DESTINATION_STAND}, engines shut down, request close flight plan.",
+        "slots": ["UNIT_GROUND","CALLSIGN","DESTINATION_STAND"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 2,
+        "speaker": "ATC",
+        "isUserTurn": false,
+        "template": "{CALLSIGN}, flight plan closed, thank you for cooperation, good day.",
+        "slots": ["CALLSIGN"],
+        "criticalReadback": []
+      },
+      {
+        "turn": 3,
+        "speaker": "PILOT",
+        "isUserTurn": true,
+        "template": "Good day, {CALLSIGN}.",
+        "slots": ["CALLSIGN"],
+        "criticalReadback": [
+          { "slot": "CALLSIGN", "position": "final", "type": "mandatoryIdentifier" }
+        ]
+      }
+    ],
+    "_source": "ICAO Annex 2 / Doc 9432 Ch.4"
+  }
+]
